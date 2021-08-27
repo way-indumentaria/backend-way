@@ -6,10 +6,10 @@ export async function conexion()
 {
     //Constante en la que definiremos las propiedades de "createPool" en la constante "connect", para que poder conectarse a la base de datos
     const connect = await createPool({
-        host:'us-cdbr-east-03.cleardb.com',
-        user:'b07c014c6f2e6f',
-        password:'4535de08',
-        database:'heroku_f2a0071bed600d6'
+        host:'us-cdbr-east-04.cleardb.com',
+        user:'b41346736cbe93',
+        password:'5ebb0c4b',
+        database:'heroku_184c871a0f3b411'
     });
 
     //Entrega una respuesta
