@@ -102,8 +102,8 @@ class venta_impaga_pagaController {
                     }
                     finally { if (e_1) throw e_1.error; }
                 }
+                res.send(req.body.impagas_devoluciones);
                 yield db.end();
-                res.json(req.body.impagas_devoluciones);
             }
             catch (error) {
             }
@@ -115,8 +115,8 @@ class venta_impaga_pagaController {
                 const db = yield database_1.conexion();
                 let id_vendedor = req.params.id_vendedor;
                 let venta_impaga_paga = yield db.query('select *,ven.id_impaga_paga,(select sum(cantidad*importe) as debe from venta_detalle where id_venta_paga_impaga = ven.id_impaga_paga and estado = 1) as pago,(select sum(cantidad*importe) as debe from venta_detalle where id_venta_paga_impaga =ven.id_impaga_paga and estado = 0) as debe, (select sum(cantidad*importe) from venta_detalle where id_venta_paga_impaga = ven.id_impaga_paga)as total,concat(v.apellido,", ", v.nombre) as vendedor_descripcion , DATE_FORMAT(ven.fecha_carga,"%d/%m/%Y") as fecha_carga, DATE_FORMAT(ven.fecha_carga, "%d") as day, DATE_FORMAT(ven.fecha_carga, "%m") as month, DATE_FORMAT(ven.fecha_carga, "%Y") as year from vendedor v, venta_impaga_paga ven where ven.vendedor=v.id_vendedor and ven.vendedor = ? group by ven.fecha_venta order by ven.fecha_venta desc', [id_vendedor]);
-                yield db.end();
                 res.json(venta_impaga_paga);
+                yield db.end();
             }
             catch (error) {
                 console.log(error);
@@ -136,8 +136,8 @@ class venta_impaga_pagaController {
                     estado: Number(req.body.estado),
                 };
                 yield db.query('insert into venta_impaga_paga set ?', [guardarVenta_impaga_paga]);
-                yield db.end();
                 res.json('La venta_impaga_paga fue guardada exitosamente');
+                yield db.end();
             }
             catch (error) {
                 res.json('Error al guardar un artículo');
@@ -151,8 +151,8 @@ class venta_impaga_pagaController {
                 const db = yield database_1.conexion();
                 let codigo = req.params.codigo;
                 yield db.query("delete from venta_impaga_paga where id_impaga_paga = ?", [codigo]);
-                yield db.end();
                 res.json('La venta_impaga_paga se elimino exitosamente');
+                yield db.end();
             }
             catch (error) {
                 res.json(error);
@@ -166,8 +166,8 @@ class venta_impaga_pagaController {
                 let codigo = req.params.codigo;
                 let venta_impaga_paga_actualizado = req.body;
                 yield db.query("update venta_impaga_paga set ? where id_impaga_paga = ?", [venta_impaga_paga_actualizado, codigo]);
-                yield db.end();
                 res.json("Se actualizo exitosamente");
+                yield db.end();
             }
             catch (error) {
                 res.json(error);
@@ -180,8 +180,8 @@ class venta_impaga_pagaController {
                 const db = yield database_1.conexion();
                 let codigo = req.params.codigo;
                 let unaVenta_impaga_paga = yield db.query("select * from venta_impaga_paga where id_venta_impaga_paga = ?", [codigo]);
-                yield db.end();
                 res.json(unaVenta_impaga_paga[0]);
+                yield db.end();
             }
             catch (error) {
                 res.json(error);

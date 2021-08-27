@@ -91,8 +91,10 @@ export class venta_impaga_pagaController {
                     }
                 }
             }
+            
+            res.send(req.body.impagas_devoluciones);
+
             await db.end();
-            res.json(req.body.impagas_devoluciones);
 
         } catch (error) {
             
@@ -106,8 +108,10 @@ export class venta_impaga_pagaController {
             const db = await conexion();
             let id_vendedor = req.params.id_vendedor;
             let venta_impaga_paga = await db.query('select *,ven.id_impaga_paga,(select sum(cantidad*importe) as debe from venta_detalle where id_venta_paga_impaga = ven.id_impaga_paga and estado = 1) as pago,(select sum(cantidad*importe) as debe from venta_detalle where id_venta_paga_impaga =ven.id_impaga_paga and estado = 0) as debe, (select sum(cantidad*importe) from venta_detalle where id_venta_paga_impaga = ven.id_impaga_paga)as total,concat(v.apellido,", ", v.nombre) as vendedor_descripcion , DATE_FORMAT(ven.fecha_carga,"%d/%m/%Y") as fecha_carga, DATE_FORMAT(ven.fecha_carga, "%d") as day, DATE_FORMAT(ven.fecha_carga, "%m") as month, DATE_FORMAT(ven.fecha_carga, "%Y") as year from vendedor v, venta_impaga_paga ven where ven.vendedor=v.id_vendedor and ven.vendedor = ? group by ven.fecha_venta order by ven.fecha_venta desc',[id_vendedor]);
-            await db.end();
+            
             res.json(venta_impaga_paga);
+
+            await db.end();
 
         } catch (error) {
             console.log(error);
@@ -133,8 +137,10 @@ export class venta_impaga_pagaController {
             }
 
         await db.query('insert into venta_impaga_paga set ?',[guardarVenta_impaga_paga]);
-        await db.end();
+        
         res.json('La venta_impaga_paga fue guardada exitosamente'); 
+
+        await db.end();
     }catch(error)
     {
          res.json('Error al guardar un artículo');
@@ -152,8 +158,10 @@ export class venta_impaga_pagaController {
             let codigo = req.params.codigo;
 
             await db.query("delete from venta_impaga_paga where id_impaga_paga = ?",[codigo]);
-            await db.end();
+            
             res.json('La venta_impaga_paga se elimino exitosamente');
+
+            await db.end();
         } catch (error) {
             res.json(error);
         }
@@ -170,8 +178,10 @@ export class venta_impaga_pagaController {
             let venta_impaga_paga_actualizado = req.body;
 
             await db.query("update venta_impaga_paga set ? where id_impaga_paga = ?",[venta_impaga_paga_actualizado,codigo]);
-            await db.end();
+            
             res.json("Se actualizo exitosamente");  
+
+            await db.end();
         } catch (error) {
             res.json(error);
         }
@@ -188,8 +198,11 @@ export class venta_impaga_pagaController {
             let codigo = req.params.codigo;
 
             let unaVenta_impaga_paga = await db.query("select * from venta_impaga_paga where id_venta_impaga_paga = ?",[codigo]);
-            await db.end();
+            
             res.json(unaVenta_impaga_paga[0]);
+
+            await db.end();
+
         } catch (error) {
             res.json(error);
         }

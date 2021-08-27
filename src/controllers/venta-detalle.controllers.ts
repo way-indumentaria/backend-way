@@ -14,8 +14,10 @@ export class VentaDetalleController {
             let estado = Number(req.params.estado);
     
             let venta_impagas = await db.query('select ven.id_venta_detalle,ven.id_venta_paga_impaga,ven.producto,ven.cantidad as cantidad, (ven.importe*ven.cantidad) as importe,p.codigo as codigo_producto,p.descripcion as descripcion_producto,p.precio_final,ven.estado,ven.estado_confirmacion,DATE_FORMAT(ven.fecha_venta,"%d/%m/%Y") as fecha_venta from venta_detalle ven, producto p where ven.producto = p.id_producto and ven.id_venta_paga_impaga = ? and ven.estado = ?',[id_vip,estado]);
-            await db.end();
+            
             res.json(venta_impagas);
+
+            await db.end();
  
         } catch (error) {
             res.json(error);
@@ -96,8 +98,10 @@ export class VentaDetalleController {
                         }
                         await db.query('insert into venta_detalle set ?',[venta]);
                     }
-                    await db.end();
+                    
                     res.json(1);
+
+                    await db.end();
                 }
             }    
         } catch (error) {
@@ -202,8 +206,10 @@ export class VentaDetalleController {
                    
                 }
             }
-            await db.end();
+            
             res.json("1")
+
+            await db.end();
 
 
         } catch (error) {
@@ -219,8 +225,10 @@ export class VentaDetalleController {
     
             const db = await conexion();
             await db.query('update venta_detalle SET estado_confirmacion = ? where id_venta_detalle = ?',[estado,id]);
-            await db.end();
+            
             res.json('Se confirmo exitosamente la venta impaga.');
+
+            await db.end();
         } catch (error) {
             res.json(error);
         }
@@ -240,7 +248,7 @@ export class VentaDetalleController {
             {
                 const impagas = await db.query('select sum(importe*cantidad) as total from venta_detalle where id_venta_paga_impaga = ? and estado = 0',[ultima_planilla[0].id_ip]);
                 const pagas = await db.query('select sum(importe*cantidad) as total from venta_detalle where id_venta_paga_impaga = ? and estado = 1',[ultima_planilla[0].id_ip]);
-                await db.end();
+               
                 const datos = {
                     total_impagas:impagas[0].total,
                     total_pagas:pagas[0].total
@@ -256,7 +264,7 @@ export class VentaDetalleController {
                 res.json(datos);
             }
 
-            
+            await db.end();
         } catch (error) {
             res.json()
         }

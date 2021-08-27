@@ -19,8 +19,8 @@ class VentaDetalleController {
                 let id_vip = req.params.id_vip;
                 let estado = Number(req.params.estado);
                 let venta_impagas = yield db.query('select ven.id_venta_detalle,ven.id_venta_paga_impaga,ven.producto,ven.cantidad as cantidad, (ven.importe*ven.cantidad) as importe,p.codigo as codigo_producto,p.descripcion as descripcion_producto,p.precio_final,ven.estado,ven.estado_confirmacion,DATE_FORMAT(ven.fecha_venta,"%d/%m/%Y") as fecha_venta from venta_detalle ven, producto p where ven.producto = p.id_producto and ven.id_venta_paga_impaga = ? and ven.estado = ?', [id_vip, estado]);
-                yield db.end();
                 res.json(venta_impagas);
+                yield db.end();
             }
             catch (error) {
                 res.json(error);
@@ -89,8 +89,8 @@ class VentaDetalleController {
                             };
                             yield db.query('insert into venta_detalle set ?', [venta]);
                         }
-                        yield db.end();
                         res.json(1);
+                        yield db.end();
                     }
                 }
             }
@@ -179,8 +179,8 @@ class VentaDetalleController {
                         }
                     }
                 }
-                yield db.end();
                 res.json("1");
+                yield db.end();
             }
             catch (error) {
                 res.json(error);
@@ -194,8 +194,8 @@ class VentaDetalleController {
                 const estado = req.body.estado;
                 const db = yield database_1.conexion();
                 yield db.query('update venta_detalle SET estado_confirmacion = ? where id_venta_detalle = ?', [estado, id]);
-                yield db.end();
                 res.json('Se confirmo exitosamente la venta impaga.');
+                yield db.end();
             }
             catch (error) {
                 res.json(error);
@@ -213,7 +213,6 @@ class VentaDetalleController {
                 if (ultima_planilla[0]) {
                     const impagas = yield db.query('select sum(importe*cantidad) as total from venta_detalle where id_venta_paga_impaga = ? and estado = 0', [ultima_planilla[0].id_ip]);
                     const pagas = yield db.query('select sum(importe*cantidad) as total from venta_detalle where id_venta_paga_impaga = ? and estado = 1', [ultima_planilla[0].id_ip]);
-                    yield db.end();
                     const datos = {
                         total_impagas: impagas[0].total,
                         total_pagas: pagas[0].total
@@ -229,6 +228,7 @@ class VentaDetalleController {
                     console.log(datos);
                     res.json(datos);
                 }
+                yield db.end();
             }
             catch (error) {
                 res.json();
