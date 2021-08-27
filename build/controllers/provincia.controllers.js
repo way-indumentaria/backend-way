@@ -18,18 +18,25 @@ class provinciaController {
                 const db = yield database_1.conexion();
                 let provincias = yield db.query('select * from provincia');
                 res.json(provincias);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
     guardarProvincias(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const db = yield database_1.conexion();
-            let provincia = req.body;
-            yield db.query('insert into provincia set ?', [provincia]);
-            return res.json('La provincia fue guardada exitosamente');
+            try {
+                const db = yield database_1.conexion();
+                let provincia = req.body;
+                yield db.query('insert into provincia set ?', [provincia]);
+                res.json('La provincia fue guardada exitosamente');
+                yield db.end();
+            }
+            catch (error) {
+                return res.json(error);
+            }
         });
     }
     eliminarProvincia(req, res) {
@@ -38,7 +45,8 @@ class provinciaController {
                 const conex = yield database_1.conexion();
                 let id_provincia = req.params.codigo;
                 yield conex.query('delete from provincia where id_provincia = ?', [id_provincia]);
-                return res.json("Provincia eliminada");
+                res.json("Provincia eliminada");
+                yield conex.end();
             }
             catch (error) {
                 return res.json("No se puede eliminar la provincia que este siendo utilizada por una localidad");
@@ -53,9 +61,10 @@ class provinciaController {
                 let provincia_actualizada = req.body;
                 yield db.query("update provincia set ? where id_provincia = ?", [provincia_actualizada, codigo]);
                 res.json("Se actualizo exitosamente");
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -66,9 +75,10 @@ class provinciaController {
                 let codigo = req.params.codigo;
                 let unaProvincia = yield db.query("select * from provincia where id_provincia = ?", [codigo]);
                 res.json(unaProvincia[0]);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }

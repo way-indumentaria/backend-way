@@ -12,8 +12,10 @@ export class localidadController{
             let localidades = await db.query('select l.id_localidad,l.descripcion, p.descripcion as descripcion_provincia, p.id_provincia as provincia from localidad l, provincia p where l.provincia = p.id_provincia');
     
             res.json(localidades);
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
        
     }
@@ -28,8 +30,10 @@ export class localidadController{
             await db.query('insert into localidad set ?',[localidad]);
 
             res.json('La localidad fue guardada exitosamente'); 
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
         
 
@@ -42,9 +46,10 @@ export class localidadController{
 
             let codigo = req.params.codigo;
             await db.query("delete from localidad where id_localidad = ?",[codigo]);
-            return res.json('La localidad se elimino exitosamente');
+            res.json('La localidad se elimino exitosamente');
+
+            await db.end();
         }
-        
         catch (error) {
             return res.json("No se puede eliminar una localidad que este siendo utilizada por una venta")
         }
@@ -63,8 +68,10 @@ export class localidadController{
             await db.query("update localidad set ? where id_localidad = ?",[localidad_actualizada,codigo]);
 
             res.json("Se actualizo exitosamente");
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
         
 
@@ -80,8 +87,10 @@ export class localidadController{
             let unaLocalidad = await db.query("select * from localidad where id_localidad = ?",[codigo]);
 
             res.json(unaLocalidad[0]);
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 

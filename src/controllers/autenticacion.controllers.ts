@@ -27,8 +27,9 @@ export class AutenticacionController
             const token:string = jwt.sign({_id:resultado.insertId},process.env.TOKEN || '1234');
 
             res.json(token);
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
         
     }
@@ -61,8 +62,9 @@ export class AutenticacionController
                     res.json(token);
                 }
             }
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
        
     }

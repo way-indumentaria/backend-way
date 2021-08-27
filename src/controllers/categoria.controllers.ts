@@ -10,9 +10,10 @@ export class categoriaController {
 
             let categoria = await db.query('select * from categoria');
     
-            return res.json(categoria);
+            res.json(categoria);
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -29,8 +30,9 @@ export class categoriaController {
             await db.query('insert into categoria set ?',[categoria]);
 
             res.json('La categoria fue guardada exitosamente'); 
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -45,7 +47,8 @@ export class categoriaController {
 
             let codigo = req.params.codigo;
             await db.query("delete from categoria where id_categoria = ?",[codigo]);
-            return res.json('La categoria se elimino exitosamente');
+            res.json('La categoria se elimino exitosamente');
+            await db.end();
         }
 
         catch (error) {
@@ -67,8 +70,9 @@ export class categoriaController {
             await db.query("update categoria set ? where id_categoria = ?",[categoria_actualizado,codigo]);
 
             res.json("Se actualizo exitosamente");
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     
     }
@@ -84,8 +88,9 @@ export class categoriaController {
             let unaCategoria = await db.query("select * from categoria where id_categoria = ?",[codigo]);
     
             res.json(unaCategoria[0]); 
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
         
 

@@ -13,8 +13,10 @@ export class productoController {
             let producto = await db.query('select DATE_FORMAT(p.fecha_carga,"%d/%m/%Y") as fecha_carga, DATE_FORMAT(p.fecha_carga,"%d/%m/%Y") as fecha_carga_formateada, DATE_FORMAT(p.fecha_carga, "%d") as day, DATE_FORMAT(p.fecha_carga, "%m") as month, DATE_FORMAT(p.fecha_carga, "%Y") as year, p.id_producto, p.codigo, p.descripcion, p.precio_compra, p.precio_way, p.precio_final, c.descripcion as descripcion_categoria, p.estado, p.descuento, p.categoria_sexo, p.fecha_carga, p.categoria as categoria, p.stock from producto p, categoria c where p.categoria = c.id_categoria');
     
             res.json(producto);
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -29,8 +31,10 @@ export class productoController {
             await db.query('insert into producto set ?',[producto]);
 
             res.json('El producto fue guardada exitosamente'); 
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -45,8 +49,10 @@ export class productoController {
             await db.query("delete from producto where id_producto = ?",[codigo]);
 
             res.json('El producto se elimino exitosamente');
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -63,8 +69,10 @@ export class productoController {
             await db.query("update producto set ? where id_producto = ?",[producto_actualizado,codigo]);
     
             res.json("Se actualizo exitosamente");
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -79,8 +87,10 @@ export class productoController {
             let unProducto = await db.query("select * from producto where id_producto = ?",[codigo]);
 
             res.json(unProducto[0]);
+
+            await db.end();
         } catch (error) {
-            res.json(error)
+            return res.json(error)
         }
     }
 

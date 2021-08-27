@@ -18,9 +18,10 @@ class localidadController {
                 const db = yield database_1.conexion();
                 let localidades = yield db.query('select l.id_localidad,l.descripcion, p.descripcion as descripcion_provincia, p.id_provincia as provincia from localidad l, provincia p where l.provincia = p.id_provincia');
                 res.json(localidades);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -31,9 +32,10 @@ class localidadController {
                 let localidad = req.body;
                 yield db.query('insert into localidad set ?', [localidad]);
                 res.json('La localidad fue guardada exitosamente');
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -43,7 +45,8 @@ class localidadController {
                 const db = yield database_1.conexion();
                 let codigo = req.params.codigo;
                 yield db.query("delete from localidad where id_localidad = ?", [codigo]);
-                return res.json('La localidad se elimino exitosamente');
+                res.json('La localidad se elimino exitosamente');
+                yield db.end();
             }
             catch (error) {
                 return res.json("No se puede eliminar una localidad que este siendo utilizada por una venta");
@@ -58,9 +61,10 @@ class localidadController {
                 let localidad_actualizada = req.body;
                 yield db.query("update localidad set ? where id_localidad = ?", [localidad_actualizada, codigo]);
                 res.json("Se actualizo exitosamente");
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -71,9 +75,10 @@ class localidadController {
                 let codigo = req.params.codigo;
                 let unaLocalidad = yield db.query("select * from localidad where id_localidad = ?", [codigo]);
                 res.json(unaLocalidad[0]);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }

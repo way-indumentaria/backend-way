@@ -17,10 +17,11 @@ class categoriaController {
             try {
                 const db = yield database_1.conexion();
                 let categoria = yield db.query('select * from categoria');
-                return res.json(categoria);
+                res.json(categoria);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -32,9 +33,10 @@ class categoriaController {
                 req.body.estado = Number(req.body.estado);
                 yield db.query('insert into categoria set ?', [categoria]);
                 res.json('La categoria fue guardada exitosamente');
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -44,7 +46,8 @@ class categoriaController {
                 const db = yield database_1.conexion();
                 let codigo = req.params.codigo;
                 yield db.query("delete from categoria where id_categoria = ?", [codigo]);
-                return res.json('La categoria se elimino exitosamente');
+                res.json('La categoria se elimino exitosamente');
+                yield db.end();
             }
             catch (error) {
                 return res.json("No se puede eliminar una categoria que este siendo utilizada por un producto");
@@ -59,9 +62,10 @@ class categoriaController {
                 let categoria_actualizado = req.body;
                 yield db.query("update categoria set ? where id_categoria = ?", [categoria_actualizado, codigo]);
                 res.json("Se actualizo exitosamente");
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -72,9 +76,10 @@ class categoriaController {
                 let codigo = req.params.codigo;
                 let unaCategoria = yield db.query("select * from categoria where id_categoria = ?", [codigo]);
                 res.json(unaCategoria[0]);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }

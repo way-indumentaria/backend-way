@@ -22,8 +22,9 @@ export class gastoController {
 
             //Retorna una respuesta en formato json de pagos
             res.json(gastos);
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
         
 
@@ -44,8 +45,10 @@ export class gastoController {
 
             //Retorna un mensaje despues de realizarse todo de forma correcta
             res.json('El gasto fue guardado exitosamente'); 
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     
     }
@@ -65,8 +68,10 @@ export class gastoController {
 
             //Retorna un mensaje despues de realizarse todo de forma correcta
             res.json('El gasto se elimino exitosamente');
+
+            await db.end();
         } catch (error) {
-            res.json(error)
+            return res.json(error)
         }
 
     }
@@ -89,8 +94,10 @@ export class gastoController {
 
             //Retorna un mensaje despues de realizarse todo correctamente
             res.json("Se actualizo exitosamente");
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
         
 
@@ -111,8 +118,10 @@ export class gastoController {
 
             //Retorna la consola seleccionada
             res.json(unGasto[0]);   
+
+            await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
         
     }

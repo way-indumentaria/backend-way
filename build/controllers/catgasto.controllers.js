@@ -20,9 +20,10 @@ class CatgastoController {
                 const db = yield database_1.conexion();
                 let categoria_gasto = yield db.query('select * from categoria_gasto');
                 res.json(categoria_gasto);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -34,9 +35,10 @@ class CatgastoController {
                 let catg = req.body;
                 yield db.query("insert into categoria_gasto set ?", [catg]);
                 res.json("La categoria se inserto exitosamente");
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -47,7 +49,8 @@ class CatgastoController {
             let id_categoria_gasto = req.params.id;
             try {
                 yield conex.query('delete from categoria_gasto where id_categoria_gasto = ?', [id_categoria_gasto]);
-                return res.json("Categoria de gasto eliminada");
+                res.json("Categoria de gasto eliminada");
+                yield conex.end();
             }
             catch (error) {
                 return res.json("No se puede eliminar una categoria de gasto que este siendo utilizada por un gasto");
@@ -67,9 +70,10 @@ class CatgastoController {
                 let nuevos_datos_catg = req.body;
                 yield db.query("update categoria_gasto set ? where id_categoria_gasto = ?", [nuevos_datos_catg, id]);
                 res.json('se actualizo correctamente');
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -81,9 +85,10 @@ class CatgastoController {
                 let id = req.params.id;
                 let unaCatg = yield db.query("select * from categoria_gasto where id_categoria_gasto = ? ", [id]);
                 res.json(unaCatg[0]);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }

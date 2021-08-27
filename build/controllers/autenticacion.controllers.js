@@ -31,9 +31,10 @@ class AutenticacionController {
                 const resultado = yield db.query('insert into usuario set ?', [unUsuario]);
                 const token = jsonwebtoken_1.default.sign({ _id: resultado.insertId }, process.env.TOKEN || '1234');
                 res.json(token);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -55,9 +56,10 @@ class AutenticacionController {
                         res.json(token);
                     }
                 }
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }

@@ -24,9 +24,10 @@ class gastoController {
                 let gastos = yield db.query('select g.id_gasto,g.descripcion,g.importe,cg.descripcion as descripcion_categoria, cg.id_categoria_gasto as categoria from gasto g, categoria_gasto cg where g.categoria = cg.id_categoria_gasto');
                 //Retorna una respuesta en formato json de pagos
                 res.json(gastos);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -42,9 +43,10 @@ class gastoController {
                 yield db.query('insert into gasto set ?', [gasto]);
                 //Retorna un mensaje despues de realizarse todo de forma correcta
                 res.json('El gasto fue guardado exitosamente');
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -60,9 +62,10 @@ class gastoController {
                 yield db.query("delete from gasto where id_gasto = ?", [codigo]);
                 //Retorna un mensaje despues de realizarse todo de forma correcta
                 res.json('El gasto se elimino exitosamente');
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -80,9 +83,10 @@ class gastoController {
                 yield db.query("update gasto set ? where id_gasto = ?", [gasto_actualizado, codigo]);
                 //Retorna un mensaje despues de realizarse todo correctamente
                 res.json("Se actualizo exitosamente");
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -98,9 +102,10 @@ class gastoController {
                 let unGasto = yield db.query("select * from gasto where id_gasto = ?", [codigo]);
                 //Retorna la consola seleccionada
                 res.json(unGasto[0]);
+                yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
