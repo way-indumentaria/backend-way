@@ -12,6 +12,7 @@ export class vendedorController{
             let vendedores = await db.query('select v.id_vendedor, v.nombre, v.apellido, v.dni, v.domicilio, v.email, l.descripcion as descripcion, l.id_localidad as id_localidad , v.adjunto, v.telefono, v.nom_garante, v.ape_garante, v.email_garante, v.dni_garante, v.domicilio_garante, v.telefono_garante, v.estado from vendedor v,localidad l where v.localidad = l.id_localidad order by v.nombre asc');
 
             res.json(vendedores);
+            await db.end();
         } catch (error) {
             return res.json(error);
         }
@@ -27,6 +28,7 @@ export class vendedorController{
             await db.query('insert into vendedor set ?',[vendedor]);
 
             res.json('El vendedor fue guardado exitosamente'); 
+            await db.end();
         } catch (error) {
             return res.json(error);
         }
@@ -42,6 +44,7 @@ export class vendedorController{
             let codigo = req.params.codigo;
             await db.query("delete from vendedor where id_vendedor = ?",[codigo]);
             res.json('El vendedor se elimino exitosamente');
+            await db.end();
         }
         
         catch (error) {
@@ -62,6 +65,7 @@ export class vendedorController{
             await db.query("update vendedor set ? where id_vendedor = ?",[vendedor_actualizado,codigo]);
 
             res.json("Se actualizo exitosamente");
+            await db.end();
         } catch (error) {
             return res.json(error);
         }
@@ -78,6 +82,8 @@ export class vendedorController{
             let unVendedor = await db.query("select * from vendedor where id_vendedor = ?",[codigo]);
 
             res.json(unVendedor[0]);
+            await db.end();
+
         } catch (error) {
             return res.json(error);
         }

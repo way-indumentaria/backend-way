@@ -18,6 +18,7 @@ class vendedorController {
                 const db = yield database_1.conexion();
                 let vendedores = yield db.query('select v.id_vendedor, v.nombre, v.apellido, v.dni, v.domicilio, v.email, l.descripcion as descripcion, l.id_localidad as id_localidad , v.adjunto, v.telefono, v.nom_garante, v.ape_garante, v.email_garante, v.dni_garante, v.domicilio_garante, v.telefono_garante, v.estado from vendedor v,localidad l where v.localidad = l.id_localidad order by v.nombre asc');
                 res.json(vendedores);
+                yield db.end();
             }
             catch (error) {
                 return res.json(error);
@@ -31,6 +32,7 @@ class vendedorController {
                 let vendedor = req.body;
                 yield db.query('insert into vendedor set ?', [vendedor]);
                 res.json('El vendedor fue guardado exitosamente');
+                yield db.end();
             }
             catch (error) {
                 return res.json(error);
@@ -44,6 +46,7 @@ class vendedorController {
                 let codigo = req.params.codigo;
                 yield db.query("delete from vendedor where id_vendedor = ?", [codigo]);
                 res.json('El vendedor se elimino exitosamente');
+                yield db.end();
             }
             catch (error) {
                 return res.json("No se puede eliminar un vendedor que este siendo utilizado por una venta");
@@ -58,6 +61,7 @@ class vendedorController {
                 let vendedor_actualizado = req.body;
                 yield db.query("update vendedor set ? where id_vendedor = ?", [vendedor_actualizado, codigo]);
                 res.json("Se actualizo exitosamente");
+                yield db.end();
             }
             catch (error) {
                 return res.json(error);
@@ -71,6 +75,7 @@ class vendedorController {
                 let codigo = req.params.codigo;
                 let unVendedor = yield db.query("select * from vendedor where id_vendedor = ?", [codigo]);
                 res.json(unVendedor[0]);
+                yield db.end();
             }
             catch (error) {
                 return res.json(error);
