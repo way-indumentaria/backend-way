@@ -20,7 +20,7 @@ export class VentaDetalleController {
             await db.end();
  
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
      }
 
@@ -106,7 +106,7 @@ export class VentaDetalleController {
             }    
         } catch (error) {
             console.log(error);
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -213,7 +213,7 @@ export class VentaDetalleController {
 
 
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -230,7 +230,7 @@ export class VentaDetalleController {
 
             await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
        
     }
@@ -266,7 +266,7 @@ export class VentaDetalleController {
 
             await db.end();
         } catch (error) {
-            res.json()
+            return res.json()
         }
     }
 }

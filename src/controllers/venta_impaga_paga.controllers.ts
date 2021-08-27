@@ -97,7 +97,7 @@ export class venta_impaga_pagaController {
             await db.end();
 
         } catch (error) {
-            
+            return 'error'
         }
     }
     
@@ -115,7 +115,7 @@ export class venta_impaga_pagaController {
 
         } catch (error) {
             console.log(error);
-            res.json(error);
+            return res.json(error);
         }
 
     }
@@ -143,8 +143,8 @@ export class venta_impaga_pagaController {
         await db.end();
     }catch(error)
     {
-         res.json('Error al guardar un artículo');
-         console.log(error);
+        return res.json('Error al guardar un artículo');
+
      }
 
     }
@@ -163,7 +163,7 @@ export class venta_impaga_pagaController {
 
             await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -183,7 +183,7 @@ export class venta_impaga_pagaController {
 
             await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
         
 
@@ -204,7 +204,7 @@ export class venta_impaga_pagaController {
             await db.end();
 
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
 
     }

@@ -13,7 +13,7 @@ export class vendedorController{
 
             res.json(vendedores);
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -28,7 +28,7 @@ export class vendedorController{
 
             res.json('El vendedor fue guardado exitosamente'); 
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     
     }
@@ -41,11 +41,11 @@ export class vendedorController{
 
             let codigo = req.params.codigo;
             await db.query("delete from vendedor where id_vendedor = ?",[codigo]);
-            return res.json('El vendedor se elimino exitosamente');
+            res.json('El vendedor se elimino exitosamente');
         }
         
         catch (error) {
-            res.json("No se puede eliminar un vendedor que este siendo utilizado por una venta")
+            return res.json("No se puede eliminar un vendedor que este siendo utilizado por una venta")
         }
 
     }
@@ -63,7 +63,7 @@ export class vendedorController{
 
             res.json("Se actualizo exitosamente");
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -79,7 +79,7 @@ export class vendedorController{
 
             res.json(unVendedor[0]);
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 

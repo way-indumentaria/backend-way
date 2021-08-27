@@ -15,7 +15,7 @@ export class ventaController{
 
             await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -34,7 +34,7 @@ export class ventaController{
 
             await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
 
         
@@ -89,16 +89,18 @@ export class ventaController{
                         await db.query('insert into venta set ?',[datos_venta]);
                     }
                     res.json(1);  
+                    await db.end();
                 }else{
-                    res.json(2);  
+                    return res.json(2);  
+     
                 }
 
             }
-            await db.end();
+            
               
 
         } catch (error) {
-            res.json(0);
+            return res.json(0);
         }
 
         
@@ -121,7 +123,7 @@ export class ventaController{
 
             await db.end();
         } catch (error) {
-            res.json(0);
+            return res.json(0);
         }
     }
 
@@ -140,7 +142,7 @@ export class ventaController{
 
             await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
     }
 
@@ -157,7 +159,7 @@ export class ventaController{
 
             await db.end();
         } catch (error) {
-            res.json(error);
+            return res.json(error);
         }
 
     }
@@ -183,14 +185,14 @@ export class ventaController{
             }
             
             
-
+            
             res.json(1);
 
-            await db.end();
+            await db.end();   
 
         } catch (error) {
             console.log(error);
-            res.json(0);
+            return  res.json(0);
         }
     }
 

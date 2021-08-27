@@ -21,7 +21,7 @@ class ventaController {
                 yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -36,7 +36,7 @@ class ventaController {
                 yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -79,15 +79,15 @@ class ventaController {
                             yield db.query('insert into venta set ?', [datos_venta]);
                         }
                         res.json(1);
+                        yield db.end();
                     }
                     else {
-                        res.json(2);
+                        return res.json(2);
                     }
                 }
-                yield db.end();
             }
             catch (error) {
-                res.json(0);
+                return res.json(0);
             }
         });
     }
@@ -101,7 +101,7 @@ class ventaController {
                 yield db.end();
             }
             catch (error) {
-                res.json(0);
+                return res.json(0);
             }
         });
     }
@@ -116,7 +116,7 @@ class ventaController {
                 yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -130,7 +130,7 @@ class ventaController {
                 yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -154,7 +154,7 @@ class ventaController {
             }
             catch (error) {
                 console.log(error);
-                res.json(0);
+                return res.json(0);
             }
         });
     }

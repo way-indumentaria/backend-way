@@ -106,6 +106,7 @@ class venta_impaga_pagaController {
                 yield db.end();
             }
             catch (error) {
+                return 'error';
             }
         });
     }
@@ -120,7 +121,7 @@ class venta_impaga_pagaController {
             }
             catch (error) {
                 console.log(error);
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -140,8 +141,7 @@ class venta_impaga_pagaController {
                 yield db.end();
             }
             catch (error) {
-                res.json('Error al guardar un artículo');
-                console.log(error);
+                return res.json('Error al guardar un artículo');
             }
         });
     }
@@ -155,7 +155,7 @@ class venta_impaga_pagaController {
                 yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -170,7 +170,7 @@ class venta_impaga_pagaController {
                 yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
@@ -184,7 +184,7 @@ class venta_impaga_pagaController {
                 yield db.end();
             }
             catch (error) {
-                res.json(error);
+                return res.json(error);
             }
         });
     }
