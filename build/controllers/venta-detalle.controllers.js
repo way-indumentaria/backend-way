@@ -211,8 +211,8 @@ class VentaDetalleController {
                 const ultima_planilla = yield db.query('select max(id_impaga_paga) as id_ip from venta_impaga_paga where vendedor = ?', [Number(vendedor)]);
                 console.log(ultima_planilla[0].id_ip);
                 if (ultima_planilla[0]) {
-                    const impagas = yield db.query('select sum(p.precio_way*cantidad) as total from venta_detalle ven, producto p where ven.producto = p.id_producto and id_venta_paga_impaga = ? and estado = 0', [ultima_planilla[0].id_ip]);
-                    const pagas = yield db.query('select sum(p.precio_way*cantidad) as total from venta_detalle ven, producto p where ven.producto = p.id_producto and id_venta_paga_impaga = ? and estado = 1', [ultima_planilla[0].id_ip]);
+                    const impagas = yield db.query('select sum(p.precio_way*cantidad) as total from venta_detalle ven, producto p where ven.producto = p.id_producto and id_venta_paga_impaga = ? and ven.estado = 0', [ultima_planilla[0].id_ip]);
+                    const pagas = yield db.query('select sum(p.precio_way*cantidad) as total from venta_detalle ven, producto p where ven.producto = p.id_producto and id_venta_paga_impaga = ? and ven.estado = 1', [ultima_planilla[0].id_ip]);
                     const datos = {
                         total_impagas: impagas[0].total,
                         total_pagas: pagas[0].total

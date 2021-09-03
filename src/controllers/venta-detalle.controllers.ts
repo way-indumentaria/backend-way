@@ -246,8 +246,8 @@ export class VentaDetalleController {
             console.log(ultima_planilla[0].id_ip);
             if(ultima_planilla[0])
             {
-                const impagas = await db.query('select sum(p.precio_way*cantidad) as total from venta_detalle ven, producto p where ven.producto = p.id_producto and id_venta_paga_impaga = ? and estado = 0',[ultima_planilla[0].id_ip]);
-                const pagas = await db.query('select sum(p.precio_way*cantidad) as total from venta_detalle ven, producto p where ven.producto = p.id_producto and id_venta_paga_impaga = ? and estado = 1',[ultima_planilla[0].id_ip]);
+                const impagas = await db.query('select sum(p.precio_way*cantidad) as total from venta_detalle ven, producto p where ven.producto = p.id_producto and id_venta_paga_impaga = ? and ven.estado = 0',[ultima_planilla[0].id_ip]);
+                const pagas = await db.query('select sum(p.precio_way*cantidad) as total from venta_detalle ven, producto p where ven.producto = p.id_producto and id_venta_paga_impaga = ? and ven.estado = 1',[ultima_planilla[0].id_ip]);
                
                 const datos = {
                     total_impagas:impagas[0].total,
