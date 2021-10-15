@@ -22,6 +22,7 @@ const cors_1 = __importDefault(require("cors"));
 const vendedor_route_1 = __importDefault(require("./routes/vendedor.route"));
 const autenticacion_route_1 = __importDefault(require("./routes/autenticacion.route"));
 const venta_detalle_routes_1 = __importDefault(require("./routes/venta-detalle.routes"));
+const estadisticas_routes_1 = __importDefault(require("./routes/estadisticas.routes"));
 //Clase donde estaran creados los atributos, metodos y donde seran ejecutados
 class Server {
     //Es un metodo que se ejecuta por la instancia del servidor
@@ -55,6 +56,7 @@ class Server {
         this.app.use(vendedor_route_1.default);
         this.app.use(autenticacion_route_1.default);
         this.app.use(venta_detalle_routes_1.default);
+        this.app.use(estadisticas_routes_1.default);
     }
     //Metodo donde se realizan las configuraciones extras
     middleware() {
