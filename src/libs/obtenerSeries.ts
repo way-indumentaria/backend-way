@@ -209,7 +209,7 @@ async function obtenerCantidadVentasVendedores(fdesde:string,fhasta:string,vende
 {
     const db = await conexion();
     //const resultado:any[] = await db.query('select vd.fecha_venta, sum(ifnull(vd.importe,0))as importe from venta_impaga_paga v, vendedor ven, venta_detalle vd where v.vendedor = ven.id_vendedor and vd.fecha_venta>= ? and vd.fecha_venta<= ? and v.vendedor = ?  and vd.estado = 1 group by MONTH(vd.fecha_venta)',[fdesde,fhasta,vendedor]);
-    const resultado:any[] = await db.query('SELECT count(vd.cantidad) as cantidad ,vip.vendedor, vd.fecha_venta FROM producto p, venta_detalle vd, venta_impaga_paga vip where vd.producto = p.id_producto and vd.id_venta_paga_impaga = vip.id_impaga_paga and vip.vendedor = ? and vd.fecha_venta >= ? and vd.fecha_venta <= ? and vd.estado = 1 GROUP by vip.vendedor,MONTH(vd.fecha_venta),YEAR(vd.fecha_venta)',[vendedor,fdesde,fhasta]);
+    const resultado:any[] = await db.query('SELECT count(vd.id_venta_detalle) as cantidad ,vip.vendedor, vd.fecha_venta FROM producto p, venta_detalle vd, venta_impaga_paga vip where vd.producto = p.id_producto and vd.id_venta_paga_impaga = vip.id_impaga_paga and vip.vendedor = ? and vd.fecha_venta >= ? and vd.fecha_venta <= ? and vd.estado = 1 GROUP by vip.vendedor,MONTH(vd.fecha_venta),YEAR(vd.fecha_venta)',[vendedor,fdesde,fhasta]);
    
    //console.log(resultado)
     await db.end()
