@@ -1,7 +1,7 @@
 import { conexion } from "../routes/database";
 import { Request, Response } from "express";
 import { IVenta } from "../models/venta";
-
+//prueba
 export class ventaController{
 
     public async listaVentas(req:Request,res:Response){

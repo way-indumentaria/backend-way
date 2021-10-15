@@ -19,6 +19,7 @@ import  cors  from "cors";
 import enrutadorVendedor from "./routes/vendedor.route";
 import enrutadorAut from "./routes/autenticacion.route";
 import enrutadorVentaDetalle from "./routes/venta-detalle.routes";
+import enrutadorEstadisticas from "./routes/estadisticas.routes";
 
 
 //Clase donde estaran creados los atributos, metodos y donde seran ejecutados
@@ -78,6 +79,8 @@ export class Server {
         this.app.use(enrutadorAut);
 
         this.app.use(enrutadorVentaDetalle);
+
+        this.app.use(enrutadorEstadisticas);
     }
 
     //Metodo donde se realizan las configuraciones extras
