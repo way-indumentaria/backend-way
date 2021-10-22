@@ -13,7 +13,7 @@ export class VentaDetalleController {
             let id_vip = req.params.id_vip;
             let estado = Number(req.params.estado);
     
-            let venta_impagas = await db.query('select ven.id_venta_detalle,ven.id_venta_paga_impaga,ven.producto,ven.cantidad as cantidad, (ven.importe*ven.cantidad) as importe,p.codigo as codigo_producto,p.descripcion as descripcion_producto,p.precio_final,p.precio_way as precio_costo,ven.estado,ven.estado_confirmacion,DATE_FORMAT(ven.fecha_venta,"%d/%m/%Y") as fecha_venta from venta_detalle ven, producto p where ven.producto = p.id_producto and ven.id_venta_paga_impaga = ? and ven.estado = ?',[id_vip,estado]);
+            let venta_impagas = await db.query('select ven.id_venta_detalle,ven.id_venta_paga_impaga,ven.producto,ven.cantidad as cantidad, (ven.importe*ven.cantidad) as importe,p.codigo as codigo_producto,p.descripcion as descripcion_producto,p.precio_final,p.precio_way as precio_costo,ven.estado,ven.estado_confirmacion,DATE_FORMAT(ven.fecha_venta,"%d/%m/%Y") as fecha_venta, DATE_FORMAT(vip.fecha_carga,"%d/%m/%Y") as fecha_planilla from venta_detalle ven, producto p, venta_impaga_paga vip where ven.producto = p.id_producto and ven.id_venta_paga_impaga = ? and ven.id_venta_paga_impaga = vip.id_impaga_paga and ven.estado = ?',[id_vip,estado]);
             
             res.json(venta_impagas);
 
