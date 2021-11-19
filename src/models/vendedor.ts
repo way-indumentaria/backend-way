@@ -15,4 +15,7 @@ export interface IVendedor{
     dni_garante:number;
     domicilio_garante:string;
     telefono_garante:string;
+    imagen_perfil?:string;
+    public_id?:string,
+    estado?:number
 }
