@@ -61,7 +61,7 @@ class vendedorController {
                 };
                 if (req.files) {
                     const resultado_cloudinary = yield cloudinary_1.default.v2.uploader.upload(files[0].path);
-                    vendedor_formateado.imagen_perfil = resultado_cloudinary.url;
+                    vendedor_formateado.imagen_perfil = resultado_cloudinary.secure_url;
                     vendedor_formateado.public_id = resultado_cloudinary.public_id;
                 }
                 yield db.query('insert into vendedor set ?', [vendedor_formateado]);
@@ -86,7 +86,7 @@ class vendedorController {
                     const files = req.files;
                     let codigo = req.params.codigo;
                     const resultado_cloudinary = yield cloudinary_1.default.v2.uploader.upload(files[0].path);
-                    const imagen_perfil = resultado_cloudinary.url;
+                    const imagen_perfil = resultado_cloudinary.secure_url;
                     const public_id = resultado_cloudinary.public_id;
                     const vendedor_imagen_perfil_actualizada = {
                         imagen_perfil: imagen_perfil,
