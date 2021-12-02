@@ -8,10 +8,47 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __asyncValues = (this && this.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VentaDetalleController = void 0;
 const database_1 = require("../routes/database");
 class VentaDetalleController {
+    enviarTodoPagas(req, res) {
+        var e_1, _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const db = yield database_1.conexion();
+                let id_vip = req.params.id_vip;
+                let estado = 0;
+                let venta_impagas = yield db.query('select ven.id_venta_detalle,ven.id_venta_paga_impaga,ven.producto,ven.cantidad as cantidad, (ven.importe*ven.cantidad) as importe,p.codigo as codigo_producto,p.descripcion as descripcion_producto,p.precio_final,p.precio_way as precio_costo,ven.estado,ven.estado_confirmacion,DATE_FORMAT(ven.fecha_venta,"%d/%m/%Y") as fecha_venta, DATE_FORMAT(vip.fecha_venta,"%d/%m/%Y") as fecha_planilla from venta_detalle ven, producto p, venta_impaga_paga vip where ven.producto = p.id_producto and ven.id_venta_paga_impaga = ? and ven.id_venta_paga_impaga = vip.id_impaga_paga and ven.estado = ?', [id_vip, estado]);
+                try {
+                    for (var venta_impagas_1 = __asyncValues(venta_impagas), venta_impagas_1_1; venta_impagas_1_1 = yield venta_impagas_1.next(), !venta_impagas_1_1.done;) {
+                        let vi = venta_impagas_1_1.value;
+                        yield db.query('update venta_detalle SET estado = 1 where id_venta_detalle = ?', [vi.id_venta_detalle]);
+                    }
+                }
+                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                finally {
+                    try {
+                        if (venta_impagas_1_1 && !venta_impagas_1_1.done && (_a = venta_impagas_1.return)) yield _a.call(venta_impagas_1);
+                    }
+                    finally { if (e_1) throw e_1.error; }
+                }
+                ;
+                yield db.end();
+                res.json('Operación exitosa!');
+            }
+            catch (error) {
+                res.json(error);
+            }
+        });
+    }
     listaImpagasPagas(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

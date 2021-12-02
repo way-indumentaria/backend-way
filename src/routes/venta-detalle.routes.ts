@@ -7,6 +7,8 @@ let venta_detalle = new VentaDetalleController();
 
 const enrutadorVentaDetalle = Router();
 
+enrutadorVentaDetalle.route('/enviar-todo-pagas/:id_vip').get(venta_detalle.enviarTodoPagas);
+
 enrutadorVentaDetalle.route('/ventas-impagas/:id_vip/:estado').get(venta_detalle.listaImpagasPagas);
 enrutadorVentaDetalle.route('/ventas-pagas/:id_vip/:estado').get(venta_detalle.listaImpagasPagas);
 enrutadorVentaDetalle.route('/enviar-pagas-impagas/:id_venta_detalle/:id_producto/:estado').get(venta_detalle.enviaraPagasImpagas);
