@@ -59,13 +59,13 @@ class vendedorController {
                     telefono_garante: req.body.telefono_garante,
                     estado: Number(req.body.estado)
                 };
-                if (req.files) {
+                if (files[0]) {
                     const resultado_cloudinary = yield cloudinary_1.default.v2.uploader.upload(files[0].path);
                     vendedor_formateado.imagen_perfil = resultado_cloudinary.secure_url;
                     vendedor_formateado.public_id = resultado_cloudinary.public_id;
                 }
                 yield db.query('insert into vendedor set ?', [vendedor_formateado]);
-                if (req.files) {
+                if (files[0]) {
                     yield fs_extra_1.default.unlink(files[0].path);
                 }
                 res.json('El vendedor fue guardado exitosamente');

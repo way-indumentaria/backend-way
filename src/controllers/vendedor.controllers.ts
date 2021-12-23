@@ -56,7 +56,7 @@ export class vendedorController{
                 estado:Number(req.body.estado)
             }
 
-            if(req.files){
+            if(files[0]){
                 const resultado_cloudinary = await cloudinary.v2.uploader.upload(files[0].path);
 
                 vendedor_formateado.imagen_perfil = resultado_cloudinary.secure_url;
@@ -65,7 +65,7 @@ export class vendedorController{
 
             await db.query('insert into vendedor set ?',[vendedor_formateado]);
 
-            if(req.files){
+            if(files[0]){
                 await fs.unlink(files[0].path); 
             }
 
