@@ -19,3 +19,4 @@ export interface IVendedor{
     public_id?:string,
     estado?:number
 }
+//probando
